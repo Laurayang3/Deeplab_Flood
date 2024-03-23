@@ -1,0 +1,58 @@
+EXP:
+    ID: floodnet
+    OUTPUT_DIR: data
+
+DATASET:
+    NAME: floodnet
+    ROOT: /shared/user82/workspace/myang3/data/FloodNet
+    LABELS: /shared/user82/workspace/myang3/data/FloodNet
+    N_CLASSES: 10
+    IGNORE_LABEL: 255
+    SCALES: [0.5, 0.75, 1.0, 1.25, 1.5]
+    SPLIT:
+        TRAIN: train
+        VAL: val
+        TEST: test
+
+DATALOADER:
+    NUM_WORKERS: 2
+
+IMAGE:
+    MEAN:
+        R: 122.675
+        G: 116.669
+        B: 104.008
+    SIZE:
+        BASE: # None
+        TRAIN: 321
+        TEST: 513
+
+MODEL:
+    NAME: DeepLabV2_ResNet101_MSC
+    N_BLOCKS: [3, 4, 23, 3]
+    ATROUS_RATES: [6, 12, 18, 24]
+    INIT_MODEL: /shared/user82/workspace/myang3/projects/deeplab-pytorch/pretrain/deeplabv2_resnet101_msc-cocostuff164k-100000.pth
+
+SOLVER:
+    BATCH_SIZE:
+        TRAIN: 5
+        TEST: 5
+    ITER_MAX: 100000
+    ITER_SIZE: 2
+    ITER_SAVE: 5000
+    ITER_TB: 100
+    LR_DECAY: 10
+    LR: 2.5e-4
+    MOMENTUM: 0.9
+    OPTIMIZER: sgd
+    POLY_POWER: 0.9
+    WEIGHT_DECAY: 5.0e-4
+    AVERAGE_LOSS: 20
+
+CRF:
+    ITER_MAX: 10
+    POS_W: 3
+    POS_XY_STD: 1
+    BI_W: 4
+    BI_XY_STD: 67
+    BI_RGB_STD: 3
